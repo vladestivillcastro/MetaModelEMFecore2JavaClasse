@@ -78,10 +78,6 @@ public class ReadEcoreAndGenerateJava {
         op_input_ecore_file.setRequired(true); // make it mandatory
         options.addOption(op_input_ecore_file);
         
-        Option o_input_genmodel_file = new Option("g", "genmodel", true, "name of EMF input genmodel file"); // 'true' means it expects an argument
-        o_input_genmodel_file.setRequired(false); // Not mandatory
-        options.addOption(o_input_genmodel_file);
-        
         Option help = new Option("h", "help", false, "Display help information"); // 'false' for a flag/switch
         options.addOption(help);
         
@@ -144,8 +140,8 @@ public class ReadEcoreAndGenerateJava {
     
     // 3. Tweak the GenPackage(s)
     GenPackage genPackage = (GenPackage) genModel.getGenPackages().get(0);
-    genPackage.setPrefix("Mipal");               // prefix for generated class names
-    genPackage.setBasePackage("mipal.newtypes"); // Java package prefix
+    genPackage.setPrefix("NewGITmetamodelwithtypes");               // prefix for generated class names
+    genPackage.setBasePackage(""); // Java package prefix
     
     // 4. Save the .genmodel (optional)
     Resource genRes = rs.createResource(URI.createFileURI("Mipal.genmodel"));
