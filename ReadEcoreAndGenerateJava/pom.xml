@@ -35,5 +35,24 @@
             <type>jar</type>
         </dependency>
     </dependencies>
+    <build>
+    <plugins>
+        <!-- This plugin configures the Manifest file for executable JARs -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.4.2</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <!-- REPLACE THIS with your actual fully qualified main class name -->
+                        <mainClass>mipal.readecoreandgeneratejava.ReadEcoreAndGenerateJava</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+    </plugins>
+    </build>
     <name>ReadEcoreAndGenerateJava</name>
 </project>
