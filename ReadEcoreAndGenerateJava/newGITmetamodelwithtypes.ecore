@@ -5,10 +5,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Arrangement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrangementName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stateMachine" lowerBound="1"
-        upperBound="-1" eType="#//StateMachine" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sensorVariables" lowerBound="1"
-        eType="#//ListOfIntegerVariables" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        upperBound="-1" eType="#//Component" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sensorVariables" eType="#//ListOfIntegerVariables"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="booleanSensorVariables"
         eType="#//ListOfBooleanVariables" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="setSensorVariables" eType="#//ListOfIntegerSetVariables"
@@ -32,7 +32,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="scheduler" eType="#//SchedulerStateMachine"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StateMachine">
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialState" lowerBound="1"
@@ -53,6 +53,8 @@
         upperBound="-1" eType="#//ProbabilisticTransition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="probabilistic" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arraysLocalVariables" upperBound="-1"
+        eType="#//ListOfArrayVariables" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateName" lowerBound="1"
@@ -203,7 +205,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rightExpression" lowerBound="1"
         eType="#//ArithmeticExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TimeExpression" eSuperTypes="#//BooleanExpression">
+  <eClassifiers xsi:type="ecore:EClass" name="AfterTimeExpression" eSuperTypes="#//BooleanExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeBound" lowerBound="1"
         eType="#//ArithmeticExpression" containment="true"/>
   </eClassifiers>
@@ -300,5 +302,34 @@
         eType="#//IntegerVariable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="is_ringlet_complete" lowerBound="1"
         eType="#//BooleanVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PeriodTimeExpression" eSuperTypes="#//BooleanExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="timeBound" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompositeType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleType" eSuperTypes="#//CompositeType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArrayVariable" eSuperTypes="#//CompositeType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//CompositeType" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListOfArrayVariables">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//ArrayVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndexedVariable" eSuperTypes="#//ArithmeticExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayVariableName" eType="#//ArrayVariable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indexes" upperBound="-1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Subarrangement" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="theArrangement" lowerBound="1"
+        eType="#//Arrangement" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
