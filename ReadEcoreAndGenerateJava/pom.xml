@@ -38,20 +38,33 @@
     <build>
     <plugins>
         <!-- This plugin configures the Manifest file for executable JARs -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.4.2</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <!-- REPLACE THIS with your actual fully qualified main class name -->
-                        <mainClass>mipal.readecoreandgeneratejava.ReadEcoreAndGenerateJava</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+         <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.7.1</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <!-- Sets your main class -->
+                <mainClass>mipal.readecoreandgeneratejava.ReadEcoreAndGenerateJava</mainClass>
+            </manifest>
+        </archive>
+        <descriptorRefs>
+            <!-- Tells Maven to bundle all dependencies into the JAR -->
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <!-- Binds this plugin to the 'mvn package' phase -->
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
     </plugins>
     </build>
     <name>ReadEcoreAndGenerateJava</name>
